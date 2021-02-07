@@ -1,0 +1,35 @@
+.bg_nav{
+	height: 45px;
+	background-color: rgb(245,245,245);
+}
+.bg_index{
+	height: 45px;
+	background-color: rgb(255,51,102);
+}
+.font_white{
+	color: rgb(255,255,255);
+}
+
+
+/* 轮播 */
+  .el-carousel__item h3 {
+    color: #475669;
+    font-size: 14px;
+    opacity: 0.75;
+    line-height: 200px;
+    margin: 0;
+  }
+  
+  .el-carousel__item:nth-child(2n) {
+    background-color: #99a9bf;
+  }
+  
+  .el-carousel__item:nth-child(2n+1) {
+    background-color: #d3dce6;
+  }
+  
+  /*页脚小字体*/
+  .small_font{
+      font-size: 0.6rem;
+  }
+  

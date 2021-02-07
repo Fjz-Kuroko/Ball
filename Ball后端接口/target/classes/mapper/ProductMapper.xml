@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：该mapper.xml映射文件的唯一标识 -->
+<mapper namespace="com.ball.dao.ProductDao">
+    <!-- 新增商品 -->
+    <insert id="insert" parameterType="Product">
+        insert into ball_product (pid, pname, price, category, sale_num, imgurl, description)
+        values (#{pid}, #{pname}, #{price}, #{category}, #{saleNum}, #{imgurl}, #{description});
+    </insert>
+    <!-- 根据商品id删除商品 -->
+    <delete id="delete" parameterType="String">
+        delete from ball_product where pid = #{pid}
+    </delete>
+    <!-- 更新商品信息 -->
+    <update id="update" parameterType="Product">
+        update ball_product
+        <set>
+            <if test="pname != null">
+                pname = #{pname},
+            </if>
+            <if test="price != null and '' != price">
+                price = #{price},
+            </if>
+            <if test="category != null">
+                category = #{category},
+            </if>
+            <if test="saleNum != null and '' != saleNum">
+                sale_num = #{saleNum},
+            </if>
+            <if test="imgurl != null">
+                imgurl = #{imgurl},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+        </set>
+        where pid = #{pid}
+    </update>
+    <!-- 查询所有商品 -->
+    <select id="selectAllProduct" resultType="Product">
+        select * from ball_product
+    </select>
+    <!-- 根据商品id查询商品 -->
+    <select id="selectByPid" resultType="Product">
+        select * from ball_product where pid = #{pid}
+    </select>
+    <!-- 根据条件查询所有商品 -->
+    <select id="selectAllProductByCondition" parameterType="String" resultType="Product">
+        select * from ball_product where 1=1
+        <if test="condition != null and '' != condition">
+            and (pname like concat('%', #{condition}, '%') or category like concat('%', #{condition}, '%'))
+        </if>
+    </select>
+    <!-- 后台分页查询所有商品 -->
+    <select id="prodList" resultType="Product" parameterType="map">
+        select * from ball_product where 1=1
+        <choose>
+            <when test="pid != null and '' != pid">
+                and pid like concat('%', #{pid}, '%')
+            </when>
+            <otherwise>
+                <if test="pname != null and '' != pname">
+                    and pname like concat('%', #{pname}, '%')
+                </if>
+                <if test="category != null and ''!= category">
+                    and category like concat('%', #{category}, '%')
+                </if>
+            </otherwise>
+        </choose>
+    </select>
+    <!-- 获取销量过千的商品数量 -->
+    <select id="getThousandSale" resultType="Product">
+        select * from ball_product where sale_num >= 1000
+    </select>
+    <!-- 根据分类获取销量 -->
+    <select id="getSaleByCategory" parameterType="String" resultType="Integer">
+        select sum(sale_num) from ball_product where category like concat('%', #{category}, '%')
+    </select>
+    <!-- 根据分类获取数量 -->
+    <select id="getNumByCategory" parameterType="String" resultType="Integer">
+        select count(1) from ball_product where category like concat('%', #{category}, '%')
+    </select>
+</mapper>

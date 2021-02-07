@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>球球网</title>
+		<!--    四个包的顺序不能乱-->
+		<link rel="stylesheet" href="css/bootstrap.css">
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<link rel="stylesheet" href="css/index.css"/>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/popper.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=eDwyuSZGlrBwtnabeSG0GQB1Hsmt86Kh"></script>
+	<style type="text/css">  
+	    html{height:100%}    
+	    body{height:100%;margin:0px;padding:0px}    
+	    #map{height:70%}    
+	</style> 
+	</head>
+	<body>
+	<!-- 头部 -->
+	<div id="head"></div>
+	
+	<!-- 主体 -->
+	<div id="main">
+		
+		<!-- 轮播图 -->
+		<div>
+			<div class="jumbotron">
+				<template>
+				  <el-carousel :interval="4000" type="card" height="500px">
+				    <el-carousel-item v-for="item in imgurl">
+				      <h3 class="medium">
+						 <img :src="item.url" alt="" style="width: 880px; height: 500px;">
+					  </h3>
+				    </el-carousel-item>
+				  </el-carousel>
+				</template>
+			</div>
+		</div>
+		<!-- 四个大图标 -->
+			<div class="nav-next container">
+			    <ul class="nav justify-content-around nav-justified mt-2">
+			        <li class="nav-item">
+						<div class="card" style="width: 10rem;">
+						  <img src="img/pingpangqiu.jpg" class="card-img-top" alt="..." style="height: 7rem;">
+						  <div class="card-body">
+						    <p class="card-text">乒乓球</p>
+							<p class="card-text">来一场男人之间的对决！！打乒乓球</p>
+						  </div>
+						</div>
+					</li>
+					<li class="nav-item">
+						<div class="card" style="width: 10rem;">
+						  <img src="img/paiqiu.jpg" class="card-img-top" alt="..." style="height: 7rem;">
+						  <div class="card-body">
+						    <p class="card-text">排球</p>
+							<p class="card-text">来一场男人之间的对决！！打排球</p>
+						  </div>
+						</div>
+					</li>
+					<li class="nav-item">
+						<div class="card" style="width: 10rem;">
+						  <img src="img/lanqiu.jpg" class="card-img-top" alt="..." style="height: 7rem;">
+						  <div class="card-body">
+						    <p class="card-text">篮球</p>
+							<p class="card-text">来一场男人之间的对决！！打篮球</p>
+						  </div>
+						</div>
+					</li>
+					<li class="nav-item">
+						<div class="card" style="width: 10rem;">
+						  <img src="img/yumaoqiu.jpg" class="card-img-top" alt="..." style="height: 7rem;">
+						  <div class="card-body">
+						    <p class="card-text">羽毛球</p>
+							<p class="card-text">来一场男人之间的对决！！打羽毛球</p>
+						  </div>
+						</div>
+					</li>
+			    </ul>
+			</div>
+	</div>
+	<br><br>
+	<div id="map"></div>
+	<br>
+	<script type="text/javascript"> 
+	var map = new BMap.Map("map");    
+	var point = new BMap.Point(113.034422,23.153273);    
+	map.centerAndZoom(point, 17);    
+	window.setTimeout(function(){  
+	    map.panTo(new BMap.Point(113.034422,23.153273));    
+	}, 2000);
+	</script> 
+	<!-- 尾部-->
+	<div id="footer"></div>
+	<script>
+		$("#head").load("head.html");
+		$("#footer").load("footer.html");
+	</script>
+	<!--vue引入-->
+		<script src="js/jquery.cookie.js"></script>
+		<script src="js/public.js"></script>
+	    <script src="vue/vue.js"></script>
+	    <script src="vue/axios.min.js"></script>	
+		<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+		<script src="js/index.js"></script>
+		
+	</body>
+</html>

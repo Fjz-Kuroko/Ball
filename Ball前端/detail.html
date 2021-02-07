@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>产品详情</title>
+		<!--    四个包的顺序不能乱-->
+		<link rel="stylesheet" href="css/bootstrap.css">
+		<link rel="stylesheet" href="css/detail.css">
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<link rel="stylesheet" href="css/index.css"/>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/popper.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+	</head>
+	<body>
+	<!-- 页头 -->
+	<div id="head"></div>
+	
+	<!-- 主体 -->
+	<div id="main" class="container mt-4">
+		<el-row>
+		  <el-col :span="8"><div>
+			<!-- 商品图 -->
+			<template>
+			  <div class="block">
+			    <el-carousel trigger="click" height="430px">
+			      <img :src="result.imgurl" alt="" style="width: 100%">
+			    </el-carousel>
+			  </div>
+			</template>
+		  </div></el-col>
+		  
+		  <el-col :span="1">&nbsp;</el-col>
+		  
+		  <el-col :span="10">
+		  <!-- 文字 -->
+		  <!-- 标题 -->
+		  <el-row>
+			  <el-col :span="24">{{result.pname}}</el-col>
+		  </el-row>
+		  <!-- 价格 -->
+		  <div style="background-color: rgb(245,245,245);" class="mt-2">
+		  <el-row>
+			<div class="mt-3 ml-2">
+			<el-col :span="4">
+				价&nbsp;&nbsp;格：
+			</el-col>
+			<el-col :span="20">
+				<font class="text-danger font-weight-bold">￥{{result.price}}</font>
+			</el-col>
+			</div>
+		  </el-row>
+		  <el-row>
+			<div class="mt-3 ml-2">
+		  	<el-col :span="4">
+		  		领&nbsp;&nbsp;卷：
+		  	</el-col>
+		  	<el-col :span="20">
+		  		满99减10
+		  	</el-col>
+			</div>
+		  </el-row>
+		  <el-row>
+		  	<div class="mt-3 ml-2">
+		  	<el-col :span="4">
+		  		促&nbsp;&nbsp;销：
+		  	</el-col>
+		  	<el-col :span="20">
+		  		第二件商品半价
+		  	</el-col>
+		  	</div>
+		  </el-row>
+		  <el-row>
+		  	<div class="mt-1">
+		  	<el-col :span="24">
+		  		&nbsp;
+		  	</el-col>
+		  	</div>
+		  </el-row>
+		  </div>
+		  <!-- 地址 -->
+		  <el-row>
+		  	<div class="mt-3">
+		  	<el-col :span="4">
+		  		送&nbsp;&nbsp;至：
+		  	</el-col>
+		  	<el-col :span="20">
+		  		全国包邮
+		  	</el-col>
+		  	</div>
+		  </el-row>
+		  <hr>
+		  <!-- 颜色 -->
+		  <el-row>
+		  	<div class="mt-2 m-auto">
+		  	<el-col :span="4">
+		  		<div class="m-2">颜&nbsp;&nbsp;色：</div>
+		  	</el-col>
+		  	<el-col :span="20">
+				<template>
+		  		<div>
+		  		    <el-radio v-model="radio1" label="1" border>白色</el-radio>
+		  		    <el-radio v-model="radio1" label="2" border>黑色</el-radio>
+		  		 </div>
+				 </template>
+		  	</el-col>
+		  	</div>
+		  </el-row>
+		  <!-- 尺码 -->
+		  <el-row>
+		  	<div class="mt-2 m-auto">
+		  	<el-col :span="4">
+		  		<div class="m-2">仓&nbsp;&nbsp;库：</div>
+		  	</el-col>
+		  	<el-col :span="20">
+		  		<template>
+		  		  <div class="mt-1">
+		  		    <el-radio-group v-model="radio3" size="small">
+		  		      <el-radio-button label="西藏"></el-radio-button>
+		  		      <el-radio-button label="北京"></el-radio-button>
+		  		      <el-radio-button label="广州"></el-radio-button>
+		  		      <el-radio-button label="杭州"></el-radio-button>
+		  		    </el-radio-group>
+		  		  </div>
+		  		</template>
+		  	</el-col>
+		  	</div>
+		  </el-row>
+		  <!-- 数量 -->
+		  <el-row>
+		  	<div class="mt-2 m-auto">
+		  	<el-col :span="4">
+		  		<div class="m-2">数&nbsp;&nbsp;量：</div>
+		  	</el-col>
+		  	<el-col :span="20">
+		  		<template>
+				<div class="mt-1">
+		  		  <el-input-number v-model="num" :min="1" :max="99" label="描述文字"></el-input-number>
+		  		</div>
+				</template>
+		  	</el-col>
+		  	</div>
+		  </el-row>
+		  <!-- 立即购买 -->
+		  <el-row>
+		  	<div class="mt-2 m-auto">
+		  	<el-col :span="4">
+		  		&nbsp;
+		  	</el-col>
+		  	<el-col :span="20">
+		  		<template>
+		  		<div class="mt-3">
+					<el-button type="primary" icon="el-icon-check" @click="buyIm">立即购买</el-button>
+					<el-button type="primary" @click="addCart">加入购物车<i class="el-icon-shopping-cart-full"></i></el-button>
+		  		</div>
+		  		</template>
+		  	</el-col>
+		  	</div>
+		  </el-row>
+		  </el-col>
+		  
+		  <el-col :span="1">&nbsp;</el-col>
+		  <el-col :span="4"><div>
+		  <template>
+		    <el-carousel height="500px" direction="vertical" :autoplay="false">
+		      <el-carousel-item v-for="item in 3" :key="item">
+		        <h3 class="medium">{{ item }}广告</h3>
+		      </el-carousel-item>
+		    </el-carousel>
+		  </template>
+		  </div>
+		  </el-col>
+		
+			
+		</el-row>
+		<!-- 下部分 -->
+		<div class="mt-3">
+		<el-row>
+			<el-col :span="4">
+				<div style="border:2px solid pink">
+					<h5 class="text-center">---金牌商家---</h5>
+					<p>商家：系统管理员</p>
+					<p><a href="message.html">联系：点我留言</a></p>
+					<p>电话：12345678910</p>
+					<hr>
+					<el-button type="danger" size="small">进入店铺</el-button>
+					<el-button type="info" size="small">收藏店铺</el-button>
+					<hr>
+				</div>
+			</el-col>
+			<el-col :span="20">
+				<div class="ml-2">
+				<el-tabs type="border-card">
+				  <el-tab-pane label="商品详情">
+					  <div class="card" style="width: 18rem;border: 0;">
+					    <img :src="result.imgurl" class="card-img-top" alt="...">
+					    <div class="card-body">
+					      <h5 class="card-title">详情：</h5>
+					      <p class="card-text">{{result.pname}}</p>
+					    </div>
+					    <ul class="list-group list-group-flush">
+					      <li class="list-group-item">分类：{{result.category}}</li>
+					      <li class="list-group-item">说明：{{result.description}}</li>
+					      <li class="list-group-item">销售：{{result.saleNum}}件</li>
+					    </ul>
+					    <div class="card-body">
+					      <a href="#" class="card-link">了解更多</a>
+					      <a href="#" class="card-link">点我联系</a>
+					    </div>
+					  </div>
+				  </el-tab-pane>
+				  <el-tab-pane label="包装及参数">包装及参数页面</el-tab-pane>
+				  <el-tab-pane label="评论">评论页面</el-tab-pane>
+				  <el-tab-pane label="售后保障">售后保障页面</el-tab-pane>
+				</el-tabs>
+				</div>
+			</el-col>
+		</el-row>
+		</div>
+		
+	<!-- main end -->
+	</div>
+	
+	<!-- 页脚 -->
+	<div id="footer"></div>
+	<script>
+		$("#head").load("head.html");
+		$("#footer").load("footer.html");
+	</script>
+	
+	
+	<!--vue引入-->
+	<!-- Qs库，处理axios的post请求带参数问题 -->
+		<script src="https://cdn.bootcss.com/qs/6.7.0/qs.min.js"></script>
+		<script src="js/jquery.cookie.js"></script>
+		<script src="js/public.js"></script>
+	    <script src="vue/vue.js"></script>
+	    <script src="vue/axios.min.js"></script>	
+		<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+		<script src="js/detail.js"></script>
+	
+	</body>
+</html>

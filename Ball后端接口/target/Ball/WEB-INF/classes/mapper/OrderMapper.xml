@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：该mapper.xml映射文件的唯一标识 -->
+<mapper namespace="com.ball.dao.OrderDao">
+    <!-- 购物车提交订单，添加 -->
+    <insert id="addOrder" parameterType="Order">
+        insert into ball_order (oid, email, aid, order_time, order_amount, status, delivery_time, receiving_time)
+            values (#{oid}, #{email}, #{aid}, #{orderTime}, #{orderAmount}, #{status}, #{deliveryTime}, #{receivingTime});
+    </insert>
+    <!-- 根据订单号查询订单 -->
+    <select id="selectOrderByOid" parameterType="String" resultType="Order">
+        select * from ball_order where oid = #{oid}
+    </select>
+    <!-- 订单付款 -->
+    <update id="payOrder" parameterType="Order">
+        update ball_order set aid = #{aid}, status = #{status}, order_time = #{orderTime} where oid = #{oid}
+    </update>
+    <!-- 根据订单号删除订单 -->
+    <delete id="deleteOrderByOid" parameterType="String">
+        delete from ball_order where oid = #{oid}
+    </delete>
+
+    <resultMap id="ordersAndShoplists" type="com.ball.vo.ViewOrder">
+        <!-- property指向pojo对象中字段名 column指向数据库列名 -->
+        <id property="oid" column="oid" />
+        <result property="email" column="email" />
+        <result property="aid" column="aid" />
+        <result property="address" column="address" />
+        <result property="recipient" column="recipient" />
+        <result property="recipientPhone" column="recipient_phone" />
+        <result property="orderTime" column="order_time" />
+        <result property="orderAmount" column="order_amount" />
+        <result property="status" column="status" />
+        <result property="deliveryTime" column="delivery_time" />
+        <result property="receivingTime" column="receiving_time" />
+        <collection property="shoplists" ofType="com.ball.vo.ViewShoplist" column="oid"
+                    select="com.ball.dao.ShoplistDao.getShoplistByOid" />
+    </resultMap>
+    <!-- 根据email查询用户所有订单 -->
+    <select id="selectAllOrderByEmail" parameterType="String" resultMap="ordersAndShoplists">
+        select o.*, a.address, a.recipient, a.recipient_phone
+        from ball_order o, ball_address a
+        where o.aid = a.aid and o.email = #{email}
+    </select>
+    <!-- 查询所有订单 -->
+    <select id="selectAllOrder" parameterType="map" resultMap="ordersAndShoplists">
+        select o.*, a.address, a.recipient, a.recipient_phone
+        from ball_order o, ball_address a
+        where o.aid = a.aid
+        <choose>
+            <when test="oid != null and '' != oid">
+                and o.oid like concat('%', #{oid}, '%')
+            </when>
+            <otherwise>
+                <if test="status != null and '' != status">
+                    and o.status = #{status}
+                </if>
+            </otherwise>
+        </choose>
+    </select>
+    <!-- 根据订单号查询订单和涉及商品信息 -->
+    <select id="selectViewOrderByOid" parameterType="String" resultMap="ordersAndShoplists">
+        select o.*, a.address, a.recipient, a.recipient_phone
+        from ball_order o, ball_address a
+        where o.aid = a.aid and o.oid = #{oid}
+    </select>
+    <!-- 订单发货 -->
+    <update id="deliverOrder" parameterType="map">
+        update ball_order set status = #{status}, delivery_time = #{deliveryTime} where oid = #{oid}
+    </update>
+    <!-- 订单收货 -->
+    <update id="receivingOrder" parameterType="map">
+        update ball_order set status = #{status}, receiving_time = #{receivingTime} where oid = #{oid}
+    </update>
+    <!-- 根据订单状态获取订单 -->
+    <select id="selectOrderByStatus" parameterType="String" resultType="Order">
+        select * from ball_order where status = #{status};
+    </select>
+</mapper>

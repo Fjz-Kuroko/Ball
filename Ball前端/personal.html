@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<!--    包的顺序不能乱-->
+		<link rel="stylesheet" href="css/bootstrap.css">
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<link rel="stylesheet" href="css/index.css"/>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/popper.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+	</head>
+	<body>
+	<!-- 头部 -->
+	<div id="head"></div>
+	<!-- 中间 -->
+	<div id="main" class="container">
+		<div class="row mt-4">
+		  <div class="col-2">
+		    <div class="list-group" id="list-tab" role="tablist">
+		      <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">个人资料</a>
+		      <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">收货地址</a>
+		      <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">修改密码</a>
+		      <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings">修改说明</a>
+		    </div>
+		  </div>
+		  <div class="col-10">
+		    <div class="tab-content" id="nav-tabContent">
+		      <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+				  <div class="card text-center">
+				    <div class="card-header">
+				      您的个人信息：
+				    </div>
+				    <div class="card-body">
+					  <h5 class="card-title">用户名：{{userInfo.uname}}</h5>
+					  <p class="card-text">绑定邮箱：{{userInfo.email}}</p>
+				      <p class="card-text">绑定手机：{{userInfo.phone}}</p>
+				      <p class="card-text">性别：{{userInfo.gender}}</p>
+				      
+				    </div>
+				    <div class="card-footer text-muted">
+				      安全系数：<br><br><el-progress :text-inside="true" :stroke-width="24" :percentage="100" status="success"></el-progress>
+				    </div>
+				  </div>
+			  </div>
+		      <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+				  <template>
+				    <el-table
+				      :data="addresses"
+				      stripe
+				      style="width: 100%">
+				      <el-table-column
+				        prop="email"
+				        label="邮箱"
+				        width="180">
+				      </el-table-column>
+				      <el-table-column
+				        prop="recipient"
+				        label="姓名"
+				        width="120">
+				      </el-table-column>
+					  <el-table-column
+					    prop="recipientPhone"
+					    label="电话"
+					    width="130">
+					  </el-table-column>
+					  <el-table-column
+					    prop="address"
+					    label="地址"
+					    width="350">
+					  </el-table-column>
+				      <el-table-column
+				        prop="aid"
+				        label="操作">
+						<template slot-scope="scope">
+						  <el-button @click="changeAdd(scope.row.aid)" type="text" size="small">修改</el-button>
+						  <el-button @click="deleteAdd(scope.row.aid)" type="text" size="small">删除</el-button>
+						</template>
+				      </el-table-column>
+				    </el-table>
+				  </template>
+				  <el-button type="text" @click="dialogFormVisible = true">新增地址</el-button>
+				  <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
+				    <el-form :model="form">
+						<el-form-item label="邮箱地址" :label-width="formLabelWidth">
+						  <el-input v-model="email" autocomplete="off" :disabled="true"></el-input>
+						</el-form-item>
+				      <el-form-item label="收货姓名" :label-width="formLabelWidth">
+				        <el-input v-model="form.recipient" autocomplete="off"></el-input>
+				      </el-form-item>
+					  <el-form-item label="收货地址" :label-width="formLabelWidth">
+					    <el-input v-model="form.address" autocomplete="off"></el-input>
+					  </el-form-item>
+					  <el-form-item label="收货电话" :label-width="formLabelWidth">
+					    <el-input v-model="form.recipientPhone" autocomplete="off"></el-input>
+					  </el-form-item>
+				    </el-form>
+				    <div slot="footer" class="dialog-footer">
+				      <el-button @click="dialogFormVisible = false">取 消</el-button>
+				      <el-button type="primary" @click="addAddress">确 定</el-button>
+				    </div>
+				  </el-dialog>
+				  
+			  </div>
+		      <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">暂不开放</div>
+		      <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">暂不开放</div>
+		    </div>
+		  </div>
+		</div>
+	</div>
+	
+	<!-- 尾部-->
+	<div id="footer"></div>
+	<script>
+		$("#head").load("head.html");
+		$("#footer").load("footer.html");
+	</script>
+	<!--vue引入-->
+		<script src="js/jquery.cookie.js"></script>
+		<script src="js/public.js"></script>
+	    <script src="vue/vue.js"></script>
+	    <script src="vue/axios.min.js"></script>	
+		<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+		<!-- Qs库，处理axios的post请求带参数问题 -->
+		<script src="https://cdn.bootcss.com/qs/6.7.0/qs.min.js"></script>
+		<script src="js/personal.js"></script>
+	</body>
+</html>

@@ -1,0 +1,77 @@
+<!-- 页头 -->
+	<div id = "nav">
+		<div class="bg_nav">
+		<div class="container">
+			<!-- 第一行 -->
+			<div class="row">
+				<div class="col-8 mt-3">
+					<el-breadcrumb separator=" ">
+					  <el-breadcrumb-item>商家分类</el-breadcrumb-item>
+					  <el-breadcrumb-item>商家入驻</el-breadcrumb-item>
+					  <el-breadcrumb-item>客户服务</el-breadcrumb-item>
+					  <el-breadcrumb-item>&nbsp;</el-breadcrumb-item>
+					  <el-breadcrumb-item>&nbsp;</el-breadcrumb-item>
+					  <el-breadcrumb-item>&nbsp;</el-breadcrumb-item>
+					  <el-breadcrumb-item>欢迎您，亲爱的<a href="login.html" v-if="message=='login'">用户
+					   <a href="javascript:void(0)" v-on:click="logout" v-if="message=='islogin'">&nbsp;{{username}}</a></el-breadcrumb-item>
+					</el-breadcrumb>
+				</div>
+				<div class="col-4 mt-3">
+					<el-breadcrumb separator=" ">
+					  <el-breadcrumb-item><a href="login.html" v-if="message=='login'">请登录</a>
+					  <a href="javascript:void(0)" v-on:click="logout" v-if="message=='islogin'">退出</a></el-breadcrumb-item>
+					  
+					  <el-breadcrumb-item><a href="register.html">注册</a></el-breadcrumb-item>
+					  <el-breadcrumb-item><a href="order.html">我的订单</a></el-breadcrumb-item>
+					  <el-breadcrumb-item><a href="cart.html">购物车</a></el-breadcrumb-item>
+					  <el-breadcrumb-item><a href="personal.html">个人中心</a></el-breadcrumb-item>
+					</el-breadcrumb>
+				</div>
+			</div>
+		</div>
+	</div>
+		<div class="container">
+		<!-- 搜索框 -->	
+		<div class="row">
+			<div class="col-2">
+				<img src="img/logo.jpg" alt="" height="100px">
+			</div>
+			<div class="col-2 mt-4"><h2>球球网</h2></div>
+			<div class="col-4 text-center mt-4">
+				<div class="input-group mb-3">
+				  <input type="text" class="form-control" placeholder="你想搜什么..."  v-model="condition" aria-label="Recipient's username" aria-describedby="button-addon2">
+				  <div class="input-group-append">
+				    <button class="btn btn-outline-secondary" type="button" id="button-addon2" @click="serach">搜索</button>
+				  </div>
+				</div>
+			</div>
+		</div>
+		</div>
+		<!-- 首页栏 -->
+		<div class="bg_index mt-1">
+			<div class="container">
+				<div class="row">
+					<ul class="nav justify-content-center w-100">
+					  <li class="nav-item">
+					    <a class="nav-link active font_white" href="index.html">首页</a>
+					  </li>
+					  <li class="nav-item pl-5">
+					    <a class="nav-link font_white" href="sort.html">商品</a>
+					  </li>
+					  <li class="nav-item pl-5">
+					    <a class="nav-link font_white" href="sort.html?condition=排球">排球</a>
+					  </li>
+					  <li class="nav-item pl-5">
+					    <a class="nav-link font_white" href="sort.html?condition=篮球">篮球</a>
+					  </li>
+					  <li class="nav-item pl-5">
+					    <a class="nav-link font_white" href="sort.html?condition=乒乓球">乒乓球</a>
+					  </li>
+					  <li class="nav-item pl-5">
+					    <a class="nav-link font_white" href="sort.html?condition=羽毛球">羽毛球</a>
+					  </li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>

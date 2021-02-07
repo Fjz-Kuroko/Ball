@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：该mapper.xml映射文件的唯一标识 -->
+<mapper namespace="com.ball.dao.CartDao">
+    <!-- 新增购物车记录 -->
+    <insert id="addCart" parameterType="Cart">
+        insert into ball_cart (email, pid, num) values (#{email}, #{pid}, #{num});
+    </insert>
+    <!-- 更新购物车商品数量 -->
+    <update id="updateCart" parameterType="Cart">
+        update ball_cart set num = #{num} where cid = #{cid}
+    </update>
+    <!-- 根据cid删除 -->
+    <delete id="deleteCart" parameterType="Integer">
+        delete from ball_cart where cid = #{cid}
+    </delete>
+    <!-- 根据cid查询 -->
+    <select id="selectByCid" parameterType="Integer" resultType="Cart">
+        select * from ball_cart where cid = #{cid}
+    </select>
+    <!-- 根据email查询所有记录 -->
+    <select id="selectByEmail" parameterType="String" resultType="com.ball.vo.ViewCart">
+        select c.*, p.pname, p.price, p.imgurl
+        from ball_cart c, ball_product p
+        where c.pid = p.pid and c.email = #{email}
+    </select>
+    <!-- 根据email和商品id查询 -->
+    <select id="selectByPidAndEmail" parameterType="Cart" resultType="Cart">
+        select * from ball_cart where email = #{email} and pid = #{pid}
+    </select>
+    <!-- 根据email清空购物车 -->
+    <delete id="clearAll" parameterType="String">
+        delete from ball_cart where email = #{email}
+    </delete>
+    <!-- 批量删除 -->
+    <delete id="batchDelete" parameterType="java.util.Map">
+        delete from ball_cart where cid in (${cartIds})
+    </delete>
+</mapper>

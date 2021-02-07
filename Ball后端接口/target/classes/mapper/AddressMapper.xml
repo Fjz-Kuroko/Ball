@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：该mapper.xml映射文件的唯一标识 -->
+<mapper namespace="com.ball.dao.AddressDao">
+    <!-- 新增地址 -->
+    <insert id="addAddress" parameterType="Address">
+        insert into ball_address (aid, email, address, recipient, recipient_phone) values (null, #{email}, #{address}, #{recipient}, #{recipientPhone});
+    </insert>
+    <!-- 删除地址 -->
+    <delete id="delAddress" parameterType="Integer">
+        delete from ball_address where aid = #{aid}
+    </delete>
+    <!-- 修改地址 -->
+    <update id="update" parameterType="Address">
+        update ball_address
+        <set>
+            <if test="address != null and '' != address">
+                address = #{address},
+            </if>
+            <if test="recipient != null and '' != recipient">
+                recipient = #{recipient},
+            </if>
+            <if test="recipientPhone != null and '' != recipientPhone">
+                recipient_phone = #{recipientPhone},
+            </if>
+        </set>
+        where aid = #{aid}
+    </update>
+    <!-- 根据aid查询地址 -->
+    <select id="selectByAid" parameterType="Integer" resultType="Address">
+        select * from ball_address where aid = #{aid}
+    </select>
+    <!-- 根据邮箱获取用户所有地址 -->
+    <select id="selectByEmail" parameterType="String" resultType="Address">
+        select * from ball_address where email = #{email}
+    </select>
+</mapper>

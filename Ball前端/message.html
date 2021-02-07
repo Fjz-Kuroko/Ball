@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<!-- 引入element-ui样式 -->
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<style>
+		.box-card {
+			width: 650px;
+			text-align: center;
+		}
+		.text {
+			font-size: 14px;
+		}
+		.item {
+			margin-bottom: 18px;
+		}
+		.app-container {
+			margin: 80px auto;
+			width: 650px;
+		}
+		.layout-title {
+			color: #409eff;
+			font-weight: bold;
+		}
+
+	</style>
+</head>
+<body>
+<div id="message" class="app-container">
+	<header>
+		<h1 style="text-align: center; color: #409eff;">
+			<strong>Ball Message</strong>
+		</h1>
+	</header>
+	<el-row>
+	  <el-col :span="24">
+		<el-card class="box-card">
+		  <div slot="header" class="layout-title">
+			<span>留个言吧~</span>
+		  </div>
+		  <div class="text item">
+			<el-form label-position="right" label-width="80px" :model="form" ref="form" :rules="rules">
+			  <el-form-item label="邮箱" prop="email">
+				<el-input v-model="form.email" :disabled="true"></el-input>
+			  </el-form-item>
+			  <el-form-item label="留言" prop="message">
+				<el-input v-model="form.message" type="textarea" :row="2" placeholder="请输入留言内容" clearable></el-input>
+			  </el-form-item>
+			  <el-form-item>
+				<el-button type="primary" @click="onSubmit('form')" :loading="isloading" style="margin-right: 80px;">提交</el-button>
+			  </el-form-item>
+			</el-form>
+		  </div>
+		</el-card>
+	  </el-col>
+	</el-row>
+</div>
+</body>
+<!-- 引入开发版本Vue -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!-- 引入element-ui组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<!-- 官网提供的 axios 在线地址 -->
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.0/axios.min.js"></script>
+<!-- Qs库，处理axios的post请求带参数问题 -->
+<script src="https://cdn.bootcss.com/qs/6.7.0/qs.min.js"></script>
+<!-- 引入JQuery -->
+<script src="js/jquery.min.js"></script>
+<!-- jQuery操作cookie -->
+<script src="js/jquery.cookie.js"></script>
+<script src="js/public.js"></script>
+<script src="js/message.js"></script>
+</html>
